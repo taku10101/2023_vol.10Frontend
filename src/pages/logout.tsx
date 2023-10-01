@@ -1,7 +1,7 @@
 import React from "react";
 import { auth } from "../lib/firebase/client";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import GoogleButton from "react-google-button";
+import { Button } from "@mui/material";
 
 const LogoutButton: React.FC = () => {
   const handleGoogleLogout = async () => {
@@ -16,7 +16,7 @@ const LogoutButton: React.FC = () => {
     }
   };
 
-  return <GoogleButton onClick={handleGoogleLogout}>Logout </GoogleButton>;
+  return <Button onClick={handleGoogleLogout}>Logout</Button>;
 };
 
 export default LogoutButton;
