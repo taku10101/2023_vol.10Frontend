@@ -1,10 +1,9 @@
 import React from "react";
 import { auth } from "../lib/firebase/client";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { Button } from "@mui/material";
 import GoogleButton from "react-google-button";
 
-const LoginPage: React.FC = () => {
+const LoginButton: React.FC = () => {
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
     try {
@@ -18,10 +17,8 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <>
-      <GoogleButton onClick={handleGoogleLogin}>Login with Google</GoogleButton>
-    </>
+    <GoogleButton onClick={handleGoogleLogin}>Login with Google</GoogleButton>
   );
 };
 
-export default LoginPage;
+export default LoginButton;
