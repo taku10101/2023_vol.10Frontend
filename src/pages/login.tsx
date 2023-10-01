@@ -2,6 +2,7 @@ import React from "react";
 import { auth } from "../lib/firebase/client";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { Button } from "@mui/material";
+import GoogleButton from "react-google-button";
 
 const LoginPage: React.FC = () => {
   const handleGoogleLogin = async () => {
@@ -18,7 +19,7 @@ const LoginPage: React.FC = () => {
 
   return (
     <>
-      <Button onClick={handleGoogleLogin}>Login with Google</Button>
+      <GoogleButton onClick={handleGoogleLogin}>Login with Google</GoogleButton>
     </>
   );
 };
