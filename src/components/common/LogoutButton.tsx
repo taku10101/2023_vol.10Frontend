@@ -1,5 +1,5 @@
 import React from "react";
-import { auth } from "../lib/firebase/client";
+import { auth } from "../../lib/firebase/client";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { Button } from "@mui/material";
 
