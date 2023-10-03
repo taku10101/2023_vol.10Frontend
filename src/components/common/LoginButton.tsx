@@ -1,10 +1,10 @@
 import React from "react";
-import { auth } from "../lib/firebase/client";
+import { auth } from "../../lib/firebase/client";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import GoogleButton from "react-google-button";
-import { postUser } from "./api/hello";
+import { postUser } from "../../pages/api/hello";
 
-const LoginButton: React.FC = () => {
+export const LoginButton: React.FC = () => {
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
     const user = auth.currentUser;
@@ -22,5 +22,3 @@ const LoginButton: React.FC = () => {
     <GoogleButton onClick={handleGoogleLogin}>Login with Google</GoogleButton>
   );
 };
-
-export default LoginButton;

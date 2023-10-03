@@ -1,4 +1,4 @@
-import RequireAuth from "@/components/common/RequireAuth";
+import RequireAuth from "../components/common/RequireAuth";
 import React from "react";
 
 export default function Home() {
