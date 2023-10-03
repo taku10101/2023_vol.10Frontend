@@ -8,7 +8,6 @@ const LogoutButton: React.FC = () => {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
-      //リダイレクト
       window.location.href = "/login";
       console.log("Google logout successful");
     } catch (error) {

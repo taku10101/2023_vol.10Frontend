@@ -12,7 +12,7 @@ export const LoginButton: React.FC = () => {
       await signInWithPopup(auth, provider);
 
       await postUser();
-      window.location.href = "/home";
+      window.location.href = "/overview";
       console.log("Google login successful");
     } catch (error) {
       console.error("Google login failed:", error);
