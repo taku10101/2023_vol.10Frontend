@@ -21,7 +21,7 @@ function OverviewPage() {
       <Box>
         <Box style={{ padding: "20px" }}>
           <Typography variant="h3" gutterBottom>
-            OverView{" "}
+            OverView
           </Typography>
         </Box>
         <ProjectCard />
