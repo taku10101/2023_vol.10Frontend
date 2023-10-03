@@ -13,15 +13,18 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.11",
     "@mui/material": "^5.14.11",
+    "ace-builds": "^1.28.0",
     "firebase": "^10.4.0",
     "next": "^13.5.3",
     "react": "latest",
+    "react-ace": "^10.1.0",
     "react-dom": "latest",
     "react-flow-renderer": "^10.3.17",
     "react-google-button": "^0.7.2",
     "reactflow": "^11.9.2"
   },
   "devDependencies": {
+    "@types/draft-js": "^0.11.13",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
