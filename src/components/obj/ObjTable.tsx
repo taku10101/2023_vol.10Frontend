@@ -1,9 +1,8 @@
+import { Box } from "@mui/material";
 import React from "react";
 import ReactFlow, { Background, MarkerType } from "reactflow";
 
 import "reactflow/dist/style.css";
-
-// import CustomEdge from "./CustomEdge";
 
 const defaultNodes = [
   {
@@ -67,20 +66,16 @@ const defaultEdges = [
   },
 ];
 
-const edgeTypes = {
-  //   custom: CustomEdge,
-};
-
 export default function MarkersExample() {
   return (
-    <>
-      <ReactFlow
-        defaultNodes={defaultNodes}
-        defaultEdges={defaultEdges}
-        edgeTypes={edgeTypes}
-      >
-        <Background />
-      </ReactFlow>
-    </>
+    <ReactFlow
+      style={{
+        height: "100hv",
+      }}
+      defaultNodes={defaultNodes}
+      defaultEdges={defaultEdges}
+    >
+      <Background />
+    </ReactFlow>
   );
 }

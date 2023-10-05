@@ -1,52 +1,48 @@
-import React, { useRef, useEffect } from "react";
-import MonacoEditor from "react-monaco-editor";
-import * as monaco from "monaco-editor";
+import { Box } from "@mui/material";
+import React, { useState } from "react";
 
-interface MonacoEditorProps {
+import ReactAce from "react-ace/lib/ace";
+
+type EditorProps = {
+  showEditor: boolean;
+  setShowEditor: (showEditor: boolean) => void;
+  placeholder?: string;
+  theme?: string;
+  name?: string;
+  fontSize?: number;
+  showPrintMargin?: boolean;
+  showGutter?: boolean;
+  highlightActiveLine?: boolean;
+
+  mode?: string;
+  wrapEnabled?: boolean;
   value?: string;
-  language?: string;
-  onChange?: (value: string) => void;
-}
+  width: null;
+};
 
-const MyMonacoEditor: React.FC<MonacoEditorProps> = ({
-  value,
-  language = "javascript",
-  onChange,
-}) => {
-  const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
-
-  useEffect(() => {
-    if (editorRef.current) {
-      editorRef.current.layout();
-    }
-  }, []);
-
-  const handleEditorDidMount = (
-    editor: monaco.editor.IStandaloneCodeEditor
-  ) => {
-    editorRef.current = editor;
-  };
-
-  const handleEditorChange = (value: string) => {
-    if (onChange) {
-      onChange(value);
-    }
-  };
+const App: React.FC = () => {
+  const [showEditor, setShowEditor] = useState(true);
 
   return (
-    <MonacoEditor
-      width='800'
-      height='400'
-      language={language}
-      theme='vs-dark'
-      value={value}
-      onChange={handleEditorChange}
-      editorDidMount={handleEditorDidMount}
-      options={{
-        selectOnLineNumbers: true,
+    <ReactAce
+      style={{ backgroundColor: "#929" }}
+      placeholder='ggg'
+      name='blah2'
+      fontSize={14}
+      height='calc(100vh - 40px)'
+      showPrintMargin={true}
+      showGutter={true}
+      highlightActiveLine={true}
+      value={"ggg"}
+      setOptions={{
+        enableBasicAutocompletion: true,
+        enableLiveAutocompletion: true,
+        enableSnippets: false,
+        showLineNumbers: true,
+        tabSize: 2,
       }}
     />
   );
 };
 
-export default MyMonacoEditor;
+export default App;
