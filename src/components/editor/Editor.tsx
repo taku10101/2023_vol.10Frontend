@@ -1,62 +1,52 @@
-import { Box } from "@mui/material";
-import React, { useState } from "react";
+import React, { useRef, useEffect } from "react";
+import MonacoEditor from "react-monaco-editor";
+import * as monaco from "monaco-editor";
 
-import ReactAce from "react-ace/lib/ace";
-
-type EditorProps = {
-  showEditor: boolean;
-  setShowEditor: (showEditor: boolean) => void;
-  placeholder?: string;
-  theme?: string;
-  name?: string;
-  fontSize?: number;
-  showPrintMargin?: boolean;
-  showGutter?: boolean;
-  highlightActiveLine?: boolean;
-
-  mode?: string;
-  wrapEnabled?: boolean;
+interface MonacoEditorProps {
   value?: string;
-  width?: null;
-};
+  language?: string;
+  onChange?: (value: string) => void;
+}
 
-const App: React.FC = () => {
-  const [showEditor, setShowEditor] = useState(true);
+const MyMonacoEditor: React.FC<MonacoEditorProps> = ({
+  value,
+  language = "javascript",
+  onChange,
+}) => {
+  const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
+
+  useEffect(() => {
+    if (editorRef.current) {
+      editorRef.current.layout();
+    }
+  }, []);
+
+  const handleEditorDidMount = (
+    editor: monaco.editor.IStandaloneCodeEditor
+  ) => {
+    editorRef.current = editor;
+  };
+
+  const handleEditorChange = (value: string) => {
+    if (onChange) {
+      onChange(value);
+    }
+  };
 
   return (
-    <Box
-      sx={{
-        width: "402px",
-        height: "100%",
-        display: "flex",
-        borderRight: "1px solid #000",
-        flexDirection: "column",
+    <MonacoEditor
+      width='800'
+      height='400'
+      language={language}
+      theme='vs-dark'
+      value={value}
+      onChange={handleEditorChange}
+      editorDidMount={handleEditorDidMount}
+      options={{
+        selectOnLineNumbers: true,
       }}
-    >
-      <ReactAce
-        placeholder="ggg"
-        theme="monokai"
-        name="blah2"
-        width={"400px"}
-        height="100vh"
-        fontSize={14}
-        showPrintMargin={true}
-        showGutter={true}
-        highlightActiveLine={true}
-        value={`function onLoad(editor) {
-    console.log("i've loaded");
-  ergre
-  }`}
-        setOptions={{
-          enableBasicAutocompletion: true,
-          enableLiveAutocompletion: true,
-          enableSnippets: false,
-          showLineNumbers: true,
-          tabSize: 2,
-        }}
-      />
-    </Box>
+    />
   );
 };
 
-export default App;
+export default MyMonacoEditor;

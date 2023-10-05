@@ -1,41 +1,86 @@
-import React, { useCallback, useState } from "react";
-import ReactFlow, {
-  useNodesState,
-  useEdgesState,
-  addEdge,
-  Edge,
-  Node,
-} from "reactflow";
+import React from "react";
+import ReactFlow, { Background, MarkerType } from "reactflow";
 
 import "reactflow/dist/style.css";
 
-interface FlowNode extends Node {
-  data: {
-    label: string;
-  };
-}
+// import CustomEdge from "./CustomEdge";
 
-const initialNodes: FlowNode[] = [
-  { id: "1", position: { x: 0, y: 0 }, data: { label: "1" } },
-  { id: "2", position: { x: 0, y: 100 }, data: { label: "2" } },
+const defaultNodes = [
+  {
+    id: "A",
+    position: { x: 20, y: 20 },
+    data: { label: "A" },
+  },
+  {
+    id: "B",
+    position: { x: 100, y: 200 },
+    data: { label: "B" },
+  },
+  {
+    id: "C",
+    position: { x: 300, y: 20 },
+    data: { label: "C" },
+  },
+  {
+    id: "D",
+    position: { x: 300, y: 170 },
+    data: { label: "D" },
+  },
+  {
+    id: "E",
+    position: { x: 250, y: 300 },
+    data: { label: "E" },
+  },
 ];
 
-const initialEdges: Edge[] = [{ id: "e1-2", source: "1", target: "2" }];
+const defaultEdges = [
+  {
+    id: "A->B",
+    source: "A",
+    target: "B",
+    markerEnd: {
+      type: MarkerType.Arrow,
+    },
+  },
+  //1対多
+  {
+    id: "C->D",
+    source: "C",
+    target: "D",
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+    },
+  },
 
-const App: React.FC = () => {
-  const [nodes, setNodes] = useNodesState(initialNodes);
-  const [edges, setEdges] = useEdgesState(initialEdges);
+  //多対多
+  {
+    id: "D->E",
+    source: "D",
+    target: "E",
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+    },
+    markerStart: {
+      type: MarkerType.ArrowClosed,
+      orient: "auto-start-reverse",
+    },
+  },
+];
 
-  const onConnect = useCallback(
-    (params: any) => setEdges((eds) => addEdge(params, eds)),
-    [setEdges]
-  );
-
-  return (
-    <div style={{ width: "100vw", height: "100vh" }}>
-      <ReactFlow nodes={nodes} edges={edges} onConnect={onConnect} />
-    </div>
-  );
+const edgeTypes = {
+  //   custom: CustomEdge,
 };
 
-export default App;
+export default function MarkersExample() {
+  return (
+    <>
+      <ReactFlow
+        defaultNodes={defaultNodes}
+        defaultEdges={defaultEdges}
+        edgeTypes={edgeTypes}
+      >
+        <Background />
+      </ReactFlow>
+    </>
+  );
+}
