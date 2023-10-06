@@ -1,8 +1,8 @@
 import React from "react";
-import { auth } from "../../lib/firebase/client";
+import { auth } from "../../../lib/firebase/client";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import GoogleButton from "react-google-button";
-import { postUser } from "../../pages/api/hello";
+import { postUser } from "../../../pages/api/hello";
 
 export const LoginButton: React.FC = () => {
   const handleGoogleLogin = async () => {

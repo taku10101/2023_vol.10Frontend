@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
-import { auth } from "../../lib/firebase/client";
+import { auth } from "../../../lib/firebase/client";
 import { onAuthStateChanged } from "firebase/auth";
 
 type Props = {

@@ -1,10 +1,10 @@
-import Header from "../components/Header";
-import { useState } from "react";
-import RequireAuth from "../components/common/RequireAuth";
-import Editor from "../components/editor/Editor";
 import React from "react";
 import { Box, Grid } from "@mui/material";
 import ObjTable from "@/components/obj/ObjTable";
+import RequireAuth from "@/components/common/auth/RequireAuth";
+
+import Header from "@/components/common/Header";
+import Editor from "@/components/editor/Editor";
 
 export default function Home() {
   return (
@@ -17,6 +17,7 @@ export default function Home() {
         }}
       >
         <RequireAuth>
+          ß
           <Grid
             xs={12}
             sx={{

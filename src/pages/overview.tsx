@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import Header from "@/components/common/Header";
 import { ProjectCard } from "../components/overView/ProjectCard";
 import {
   Typography,
@@ -20,7 +20,7 @@ function OverviewPage() {
       <Header />
       <Box>
         <Box style={{ padding: "20px" }}>
-          <Typography variant="h3" gutterBottom>
+          <Typography variant='h3' gutterBottom>
             OverView
           </Typography>
         </Box>

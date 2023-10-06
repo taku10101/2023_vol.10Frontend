@@ -21,9 +21,9 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/components/editor/Dummy.jsx",
-    "src/components/editor/Editor.jsx",
-    "src/components/editor/Editor.tx"
+    "src/components/common/editor/Dummy.jsx",
+    "src/components/common/editor/Editor.jsx",
+    "src/components/common/editor/Editor.tx"
   ],
   "exclude": ["node_modules"]
 }
