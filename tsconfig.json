@@ -17,13 +17,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "src/components/common/editor/Dummy.jsx",
-    "src/components/common/editor/Editor.jsx",
-    "src/components/common/editor/Editor.tx"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

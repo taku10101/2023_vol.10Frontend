@@ -1,39 +1,54 @@
 import { Box } from "@mui/material";
-import React, { useState } from "react";
-
+import React, { ChangeEvent, useEffect, useState } from "react";
 import ReactAce from "react-ace/lib/ace";
 
-type EditorProps = {
-  showEditor: boolean;
-  setShowEditor: (showEditor: boolean) => void;
-  placeholder?: string;
-  theme?: string;
-  name?: string;
-  fontSize?: number;
-  showPrintMargin?: boolean;
-  showGutter?: boolean;
-  highlightActiveLine?: boolean;
+const Editor: React.FC = () => {
+  const [text, setText] = useState<string>("");
+  const [socket, setSocket] = useState<WebSocket | null>(null);
+  useEffect(() => {
+    const ws = new WebSocket("ws://your-websocket-server-url");
 
-  mode?: string;
-  wrapEnabled?: boolean;
-  value?: string;
-  width: null;
-};
+    ws.onopen = () => {
+      console.log("WebSocket connected");
+    };
 
-const App: React.FC = () => {
-  const [showEditor, setShowEditor] = useState(true);
+    ws.onmessage = (event) => {
+      console.log("WebSocket message received:", event);
+      console.log("WebSocket message received:", event.data);
+      setText(event.data);
+    };
+
+    ws.onclose = () => {
+      console.log("WebSocket disconnected");
+      setSocket(null);
+    };
+
+    setSocket(ws);
+
+    return () => {
+      ws.close();
+    };
+  }, []);
+
+  useEffect(() => {}, [text]);
+
+  const handleChangeText = (value: string, e?: any) => {
+    setText(value);
+  };
+
+  console.log(text);
 
   return (
     <ReactAce
-      style={{ backgroundColor: "#929" }}
-      placeholder='ggg'
-      name='blah2'
+      style={{ paddingLeft: "5px", borderRight: "1px solid #ccc" }}
+      placeholder='Heare is your code....'
+      name='DBEditor'
       fontSize={14}
       height='calc(100vh - 40px)'
       showPrintMargin={true}
       showGutter={true}
       highlightActiveLine={true}
-      value={"ggg"}
+      value={text}
       setOptions={{
         enableBasicAutocompletion: true,
         enableLiveAutocompletion: true,
@@ -41,8 +56,9 @@ const App: React.FC = () => {
         showLineNumbers: true,
         tabSize: 2,
       }}
+      onChange={handleChangeText}
     />
   );
 };
 
-export default App;
+export default Editor;
