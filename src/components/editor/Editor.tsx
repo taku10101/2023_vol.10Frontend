@@ -14,7 +14,7 @@ const Editor: React.FC = () => {
 
   return (
     <ReactAce
-      style={{ paddingLeft: "5px" }}
+      style={{ paddingLeft: "5px", borderRight: "1px solid #ccc" }}
       placeholder='Heare is your code....'
       name='DBEditor'
       fontSize={14}
