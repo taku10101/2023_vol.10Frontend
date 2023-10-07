@@ -4,12 +4,38 @@ import ReactAce from "react-ace/lib/ace";
 
 const Editor: React.FC = () => {
   const [text, setText] = useState<string>("");
+  const [socket, setSocket] = useState<WebSocket | null>(null);
+  useEffect(() => {
+    const ws = new WebSocket("ws://your-websocket-server-url");
+
+    ws.onopen = () => {
+      console.log("WebSocket connected");
+    };
+
+    ws.onmessage = (event) => {
+      console.log("WebSocket message received:", event);
+      console.log("WebSocket message received:", event.data);
+      setText(event.data);
+    };
+
+    ws.onclose = () => {
+      console.log("WebSocket disconnected");
+      setSocket(null);
+    };
+
+    setSocket(ws);
+
+    return () => {
+      ws.close();
+    };
+  }, []);
 
   useEffect(() => {}, [text]);
 
   const handleChangeText = (value: string, e?: any) => {
     setText(value);
   };
+
   console.log(text);
 
   return (

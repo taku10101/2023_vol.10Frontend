@@ -17,7 +17,7 @@ export default function Home() {
         }}
       >
         <RequireAuth>
-          <Grid xs={12} sx={{}} container display={"flex"}>
+          <Grid xs={12} container display={"flex"}>
             <Grid xs={4}>
               <Editor />
             </Grid>
