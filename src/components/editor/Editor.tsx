@@ -1,39 +1,28 @@
 import { Box } from "@mui/material";
-import React, { useState } from "react";
-
+import React, { ChangeEvent, useEffect, useState } from "react";
 import ReactAce from "react-ace/lib/ace";
 
-type EditorProps = {
-  showEditor: boolean;
-  setShowEditor: (showEditor: boolean) => void;
-  placeholder?: string;
-  theme?: string;
-  name?: string;
-  fontSize?: number;
-  showPrintMargin?: boolean;
-  showGutter?: boolean;
-  highlightActiveLine?: boolean;
+const Editor: React.FC = () => {
+  const [text, setText] = useState<string>("");
 
-  mode?: string;
-  wrapEnabled?: boolean;
-  value?: string;
-  width: null;
-};
+  useEffect(() => {}, [text]);
 
-const App: React.FC = () => {
-  const [showEditor, setShowEditor] = useState(true);
+  const handleChangeText = (value: string, e?: any) => {
+    setText(value);
+  };
+  console.log(text);
 
   return (
     <ReactAce
-      style={{ backgroundColor: "#929" }}
-      placeholder='ggg'
-      name='blah2'
+      style={{ paddingLeft: "5px" }}
+      placeholder='Heare is your code....'
+      name='DBEditor'
       fontSize={14}
       height='calc(100vh - 40px)'
       showPrintMargin={true}
       showGutter={true}
       highlightActiveLine={true}
-      value={"ggg"}
+      value={text}
       setOptions={{
         enableBasicAutocompletion: true,
         enableLiveAutocompletion: true,
@@ -41,8 +30,9 @@ const App: React.FC = () => {
         showLineNumbers: true,
         tabSize: 2,
       }}
+      onChange={handleChangeText}
     />
   );
 };
 
-export default App;
+export default Editor;

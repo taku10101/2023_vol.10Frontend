@@ -66,7 +66,7 @@ const defaultEdges = [
   },
 ];
 
-export default function MarkersExample() {
+export default function ObjTable() {
   return (
     <ReactFlow
       style={{
