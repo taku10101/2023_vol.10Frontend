@@ -1,16 +1,7 @@
 import Header from "@/components/common/Header";
-import { ProjectCard } from "../components/overView/ProjectCard";
-import {
-  Typography,
-  AppBar,
-  Toolbar,
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Grid,
-  Box,
-} from "@mui/material";
+import { PersonalCard } from "@/components/overView/PersonalCard";
+import { TeamCard } from "@/components/overView/TeamCard";
+import { Typography, Box } from "@mui/material";
 import React from "react";
 
 //swr
@@ -18,13 +9,11 @@ function OverviewPage() {
   return (
     <>
       <Header />
-      <Box>
-        <Box style={{ padding: "20px" }}>
-          <Typography variant='h3' gutterBottom>
-            OverView
-          </Typography>
-        </Box>
-        <ProjectCard />
+
+      <Box sx={{ mt: 4 }}>
+        <TeamCard />
+        <Box sx={{ py: "20px" }} />
+        <PersonalCard />
       </Box>
     </>
   );
