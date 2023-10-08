@@ -1,42 +1,40 @@
 import { Box } from "@mui/material";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import ReactAce from "react-ace/lib/ace";
+import { io } from "socket.io-client";
 
 const Editor: React.FC = () => {
   const [text, setText] = useState<string>("");
-  const [socket, setSocket] = useState<WebSocket | null>(null);
+  const [socket, setSocket] = useState<any | null>(null);
+
   useEffect(() => {
-    const ws = new WebSocket("ws://your-websocket-server-url");
+    // Socket.ioのインスタンスを初期化
+    const ioInstance = io("");
+    setSocket(ioInstance);
 
-    ws.onopen = () => {
-      console.log("WebSocket connected");
-    };
+    // 初期データの取得
+    ioInstance.on("initialize", (data: string) => {
+      setText(data);
+    });
 
-    ws.onmessage = (event) => {
-      console.log("WebSocket message received:", event);
-      console.log("WebSocket message received:", event.data);
-      setText(event.data);
-    };
+    // 他のクライアントからの更新を受け取る
+    ioInstance.on("update", (data: string) => {
+      setText(data);
+    });
 
-    ws.onclose = () => {
-      console.log("WebSocket disconnected");
-      setSocket(null);
-    };
-
-    setSocket(ws);
-
+    // コンポーネントのクリーンアップ時にソケット接続を終了
     return () => {
-      ws.close();
+      ioInstance.disconnect();
     };
   }, []);
 
-  useEffect(() => {}, [text]);
-
   const handleChangeText = (value: string, e?: any) => {
     setText(value);
+    // テキストの変更をサーバーに送信
+    if (socket) {
+      socket.emit("edit", value);
+    }
   };
-
-  console.log(text);
 
   return (
     <ReactAce
