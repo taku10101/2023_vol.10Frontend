@@ -1,8 +1,10 @@
-import { Box } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 import React from "react";
 import ReactFlow, { Background, MarkerType } from "reactflow";
-
 import "reactflow/dist/style.css";
+import { TableData } from "../Repositorys/ObjRepository";
+
+const data = TableData;
 
 const defaultNodes = [
   {
@@ -13,22 +15,12 @@ const defaultNodes = [
   {
     id: "B",
     position: { x: 100, y: 200 },
-    data: { label: "B" },
+    data: { label: `` },
   },
   {
     id: "C",
     position: { x: 300, y: 20 },
     data: { label: "C" },
-  },
-  {
-    id: "D",
-    position: { x: 300, y: 170 },
-    data: { label: "D" },
-  },
-  {
-    id: "E",
-    position: { x: 250, y: 300 },
-    data: { label: "E" },
   },
 ];
 
