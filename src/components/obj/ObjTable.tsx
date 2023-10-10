@@ -2,9 +2,7 @@ import { Box, Typography, styled } from "@mui/material";
 import React from "react";
 import ReactFlow, { Background, MarkerType } from "reactflow";
 import "reactflow/dist/style.css";
-import { TableData } from "../Repositorys/ObjRepository";
-
-const data = TableData;
+import { OblLabelUi } from "./OblLabelUi";
 
 const defaultNodes = [
   {
@@ -15,7 +13,7 @@ const defaultNodes = [
   {
     id: "B",
     position: { x: 100, y: 200 },
-    data: { label: `` },
+    data: { label: `${(<OblLabelUi />)}` },
   },
   {
     id: "C",
