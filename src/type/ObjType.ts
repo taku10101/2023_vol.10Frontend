@@ -1,5 +1,5 @@
 //apiから受け取ったものを変形して格納
-interface ObjInterface {
+export type ObjInterface = {
   id: string; //table name
   position: {
     x: number;
@@ -12,8 +12,8 @@ interface ObjInterface {
       options: string[] | null;
     }
   ];
-}
-interface ObjRelationInterface {
+};
+export type ObjRelationInterface = {
   id: string;
   source: string;
   target: string;
@@ -24,4 +24,18 @@ interface ObjRelationInterface {
     type: string;
     orient: string;
   };
-}
+};
+
+export type ObjPositionType = {
+  id: string;
+  position: {
+    x: number;
+    y: number;
+  };
+};
+
+export type ObjLabelType = {
+  name: string;
+  type: string;
+  columns: { name: string; options: string[] };
+};

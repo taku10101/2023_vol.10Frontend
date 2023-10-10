@@ -1,7 +1,7 @@
-//api型定義
-export interface TableApiInterface {
-  fetchAll(): Promise<TableApiType[]>;
-}
+// //api型定義
+// export interface TableApiInterface {
+//   fetchAll(): Promise<TableApiType[]>;
+// }
 
 interface TableApiType {
   name: string;

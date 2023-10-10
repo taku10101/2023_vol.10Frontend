@@ -1,10 +1,10 @@
 import React from "react";
 import { Box, Grid } from "@mui/material";
-import ObjTable from "../components/obj/ObjTable";
 import RequireAuth from "@/components/auth/RequireAuth";
 
 import Header from "@/components/common/Header";
 import Editor from "../components/editor/Editor";
+import CustomFlowComponents from "@/components/obj/CustomFlowComponents";
 
 export default function Home() {
   return (
@@ -23,7 +23,7 @@ export default function Home() {
             </Grid>
 
             <Grid xs={8}>
-              <ObjTable />
+              <CustomFlowComponents />
             </Grid>
           </Grid>
         </RequireAuth>
