@@ -11,8 +11,8 @@ const initialElements: any = [
     data: {
       label: "Users",
       columns: [
-        { name: "id", type: "int", option: "notNull" },
-        { name: "name", type: "string" },
+        { name: "idddddddddd", type: "int", option: ["notNull", "opttion"] },
+        { name: "name", type: "string", option: ["notNull"] },
       ],
     },
     sourcePosition: "right",
@@ -46,7 +46,7 @@ const CustomFlowComponent = () => {
 
   return (
     <ReactFlow
-      nodes={elements}
+      elements={elements}
       onConnect={onConnect}
       nodeTypes={{ customNode: CustomNodeComponent }}
     />
