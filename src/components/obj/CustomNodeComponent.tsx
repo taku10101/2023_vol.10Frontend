@@ -14,8 +14,8 @@ const CustomNodeComponent = ({ data }: any) => {
         paddingBottom: "1px",
       }}
     >
-      <div
-        style={{
+      <Box
+        sx={{
           background: "#376985",
           fontWeight: "bold",
           paddingLeft: "5px",
@@ -24,46 +24,65 @@ const CustomNodeComponent = ({ data }: any) => {
         }}
       >
         {data.label}
-      </div>
-      {data.columns.map((column: any, index: number) => (
-        <Box
-          key={index}
-          sx={{
-            borderBottom: "1px solid black",
-            display: "flex",
-            paddingBottom: "2px",
-            px: "15px",
-          }}
-        >
+      </Box>
+      <Box display={"flex"} flexDirection={"column"}>
+        {data.columns.map((column: any, index: number) => (
           <Box
+            key={index}
             sx={{
-              paddingLeft: "5px",
-              textAlign: "left",
+              borderBottom: "1px solid black",
+              display: "flex",
+              paddingBottom: "2px",
+              px: "15px",
+              justifyContent: "space-between",
             }}
           >
-            {column.name}
+            <Box
+              sx={{
+                textAlign: "left",
+              }}
+            >
+              {column.name}
+            </Box>
+            <Box
+              sx={{
+                px: "15px",
+              }}
+            >
+              {" "}
+            </Box>
+            <Box
+              sx={{
+                textAlign: "right",
+                justifyContent: "space-between",
+              }}
+            >
+              {column.type}
+              <Box
+                sx={{
+                  textAlign: "right",
+                }}
+              >
+                {column.option &&
+                  column.option.map((option: any, index: number) => (
+                    <Box key={index}>{option}</Box>
+                  ))}
+              </Box>
+            </Box>
           </Box>
-          <Box
-            sx={{
-              margin: "auto",
-              px: "5px",
-            }}
-          >
-            {""} | {""}
-          </Box>
+        ))}
+      </Box>
 
-          <Box
-            sx={{
-              textAlign: "left",
-            }}
-          >
-            {column.type}
-          </Box>
-        </Box>
-      ))}
-
-      <Handle type='source' position={Position.Right} id='table1' />
-      <Handle type='source' position={Position.Left} id='table2' />
+      <Handle
+        type='source'
+        position={Position.Right}
+        id={`${data.label}-source-right`}
+      />
+      <Handle
+        type='target'
+        position={Position.Left}
+        id={`${data.label}-target-left`}
+      />
     </Box>
   );
 };
