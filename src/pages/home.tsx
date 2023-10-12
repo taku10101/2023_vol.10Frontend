@@ -1,10 +1,11 @@
 import React from "react";
 import { Box, Grid } from "@mui/material";
-import ObjTable from "../components/obj/ObjTable";
 import RequireAuth from "@/components/auth/RequireAuth";
 
 import Header from "@/components/common/Header";
 import Editor from "../components/editor/Editor";
+
+import Graph from "@/components/obj/Graph";
 
 export default function Home() {
   return (
@@ -23,7 +24,7 @@ export default function Home() {
             </Grid>
 
             <Grid xs={8}>
-              <ObjTable />
+              <Graph />
             </Grid>
           </Grid>
         </RequireAuth>
