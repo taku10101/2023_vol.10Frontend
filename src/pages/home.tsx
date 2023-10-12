@@ -4,7 +4,8 @@ import RequireAuth from "@/components/auth/RequireAuth";
 
 import Header from "@/components/common/Header";
 import Editor from "../components/editor/Editor";
-import CustomFlowComponents from "@/components/obj/CustomFlowComponents";
+
+import Graph from "@/components/obj/Graph";
 
 export default function Home() {
   return (
@@ -23,7 +24,7 @@ export default function Home() {
             </Grid>
 
             <Grid xs={8}>
-              <CustomFlowComponents />
+              <Graph />
             </Grid>
           </Grid>
         </RequireAuth>

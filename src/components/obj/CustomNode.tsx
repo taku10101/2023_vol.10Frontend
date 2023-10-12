@@ -1,16 +1,10 @@
 import { Box } from "@mui/material";
-import React from "react";
-import { Handle, Position } from "react-flow-renderer";
+import React, { memo } from "react";
+import { Handle, Position } from "reactflow";
 
-const CustomNodeComponent = ({ data, isConnectable }: any) => {
+export function CustomNode({ data, isConnectable }: any) {
   return (
     <>
-      <Handle
-        type='target'
-        position={Position.Top}
-        style={{ background: "#555" }}
-        onConnect={(params) => console.log("handle onConnect", params)}
-      />
       <Box
         style={{
           background: "white",
@@ -32,6 +26,7 @@ const CustomNodeComponent = ({ data, isConnectable }: any) => {
         >
           {data.label}
         </Box>
+
         <Box display={"flex"} flexDirection={"column"}>
           {data.columns.map((column: any, index: number) => (
             <Box
@@ -48,9 +43,28 @@ const CustomNodeComponent = ({ data, isConnectable }: any) => {
                 sx={{
                   textAlign: "left",
                 }}
+                key={column.name}
               >
+                <Handle
+                  type='target'
+                  position={Position.Left}
+                  onConnect={(params) =>
+                    console.log("handle onConnect", params)
+                  }
+                  isConnectable={isConnectable}
+                />
+                <Handle
+                  type='source'
+                  position={Position.Right}
+                  onConnect={(params) =>
+                    console.log("handle onConnect", params)
+                  }
+                  isConnectable={isConnectable}
+                />
+
                 {column.name}
               </Box>
+
               <Box
                 sx={{
                   px: "15px",
@@ -80,14 +94,6 @@ const CustomNodeComponent = ({ data, isConnectable }: any) => {
           ))}
         </Box>
       </Box>
-      <Handle
-        type='source'
-        position={Position.Bottom}
-        id='a'
-        style={{ background: "#555" }}
-      />
     </>
   );
-};
-
-export default CustomNodeComponent;
+}
