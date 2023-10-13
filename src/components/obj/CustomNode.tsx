@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React, { memo } from "react";
 import { Handle, Position } from "reactflow";
 
@@ -35,7 +35,7 @@ export function CustomNode({ data, isConnectable }: any) {
                 borderBottom: "1px solid black",
                 display: "flex",
                 paddingBottom: "2px",
-                px: "15px",
+                px: "5px",
                 justifyContent: "space-between",
               }}
             >
@@ -61,19 +61,25 @@ export function CustomNode({ data, isConnectable }: any) {
                   }
                   isConnectable={isConnectable}
                 />
-
-                {column.name}
+                <Typography
+                  sx={{
+                    fontSize: "12px",
+                  }}
+                >
+                  {column.name}
+                </Typography>
               </Box>
 
               <Box
                 sx={{
-                  px: "15px",
+                  px: "10px",
                 }}
               >
                 {" "}
               </Box>
-              <Box
+              <Typography
                 sx={{
+                  fontSize: "10px",
                   textAlign: "right",
                   justifyContent: "space-between",
                 }}
@@ -86,10 +92,17 @@ export function CustomNode({ data, isConnectable }: any) {
                 >
                   {column.option &&
                     column.option.map((option: any, index: number) => (
-                      <Box key={index}>{option}</Box>
+                      <Typography
+                        key={index}
+                        sx={{
+                          fontSize: "8px",
+                        }}
+                      >
+                        {option}
+                      </Typography>
                     ))}
                 </Box>
-              </Box>
+              </Typography>
             </Box>
           ))}
         </Box>
