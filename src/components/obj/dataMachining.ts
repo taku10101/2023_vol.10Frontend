@@ -5,47 +5,36 @@ import { data } from "./data";
 
 //table名
 const tables = data.tables;
-//カラム内の情報
-const columName = tables.map((table) =>
-  table.columns.map((column) => column.name)
-);
-const ColumType = tables.map((table) =>
-  table.columns.map((column) => column.type)
-);
-const columOptions = tables.map((table) =>
-  table.columns?.map((column) => column.options)
-);
 
-export const objTables = tables.map((table, table_index) => {
+export const objTables = tables.map((table, index) => {
   const objTable = {
-    id: table_index.toString(),
+    id: table.name.toString(),
     type: "selectorNode",
     data: {
       label: table.name,
-      columns: [
-        {
-          name: columName,
-          type: ColumType,
-          options: columOptions,
-        },
-      ],
+      columns: table.columns,
     },
-    position: { x: 0, y: 0 },
+    position: { x: `${index * 200}`, y: `${index * 250}` },
   };
-  console.log(columOptions);
 
   return objTable;
 });
+console.log(objTables);
 
 const relations = data.relations;
-const from_col = relations.map((relation) => relation.from_col);
-const to_col = relations.map((relation) => relation.to_col);
+// const from_col = relations.map((relation) => relation.from_col);
+// const to_col = relations.map((relation) => relation.to_col);
 
 export const objRelations = relations.map((relation, index) => {
+  const target = relation.to_col.toString().replace(/^(.*?)\..*$/, "$1");
+  const source = relation.from_col.toString().replace(/^(.*?)\..*$/, "$1");
+
   const objRelation = {
-    id: index + tables.length.toString(),
-    source: from_col[index],
-    target: to_col[index],
+    id: tables.toString(),
+    //^.*?(?=\.)
+    source: source,
+    target: target,
+    type: "smoothstep",
   };
   return objRelation;
 });
