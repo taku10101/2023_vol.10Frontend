@@ -37,11 +37,10 @@ export const objRelations = relations.map((relation, index) => {
   const source = relation.from_col.toString().replace(/^(.*?)\..*$/, "$1");
 
   const objRelation = {
-    id: tables.toString(),
+    id: `${source + "=>" + target}`,
     source: source,
     target: target,
     type: "smoothstep",
-    label: "default closed arrow",
   };
   return objRelation;
 });
