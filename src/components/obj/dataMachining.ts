@@ -41,6 +41,7 @@ export const objRelations = relations.map((relation, index) => {
     source: source,
     target: target,
     type: "smoothstep",
+    label: "default closed arrow",
   };
   return objRelation;
 });
