@@ -12,9 +12,18 @@ export const objTables = tables.map((table, index) => {
     type: "selectorNode",
     data: {
       label: table.name,
-      columns: table.columns,
+      columns: table.columns.map((column) => {
+        return {
+          name: column.name,
+          type: column.type,
+          options: column.options,
+        };
+      }),
     },
-    position: { x: `${index * 200}`, y: `${index * 250}` },
+    position: {
+      x: parseFloat(`${index * 250}`),
+      y: parseFloat(`${180}`),
+    },
   };
 
   return objTable;
@@ -22,8 +31,6 @@ export const objTables = tables.map((table, index) => {
 console.log(objTables);
 
 const relations = data.relations;
-// const from_col = relations.map((relation) => relation.from_col);
-// const to_col = relations.map((relation) => relation.to_col);
 
 export const objRelations = relations.map((relation, index) => {
   const target = relation.to_col.toString().replace(/^(.*?)\..*$/, "$1");
@@ -31,7 +38,6 @@ export const objRelations = relations.map((relation, index) => {
 
   const objRelation = {
     id: tables.toString(),
-    //^.*?(?=\.)
     source: source,
     target: target,
     type: "smoothstep",

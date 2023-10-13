@@ -49,8 +49,9 @@ const CustomNodeFlow = () => {
       onConnect={onConnect}
       nodeTypes={nodeTypes}
       connectionLineStyle={connectionLineStyle}
-      snapToGrid={true}
       defaultViewport={defaultViewport}
+      zoomOnScroll={true}
+      zoomOnDoubleClick={true}
       className='download-image'
     >
       <MiniMap />
