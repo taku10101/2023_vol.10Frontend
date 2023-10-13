@@ -11,6 +11,7 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 
 import { CustomNode } from "./CustomNode";
+import PngButton from "./PngButton";
 
 const initBgColor = "#1A192B";
 
@@ -102,9 +103,11 @@ const CustomNodeFlow = () => {
       connectionLineStyle={connectionLineStyle}
       snapToGrid={true}
       defaultViewport={defaultViewport}
+      className='download-image'
     >
       <MiniMap />
       <Controls />
+      <PngButton />
     </ReactFlow>
   );
 };
