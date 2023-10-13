@@ -1,8 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 import "firebase/auth";
-
-//post put
 import { getAuth } from "firebase/auth";
 
 const auth = getAuth();
@@ -17,7 +15,7 @@ const getUser = async () => {
   const firebaseUser = auth.currentUser;
   if (!firebaseUser) return null;
   const response = await fetch(
-    `http://172.168.0.0.1:8080/users/${firebaseUser.uid}`,
+    `http://localhost:8080/users/${firebaseUser.uid}`,
     {
       method: "GET",
       headers: {
