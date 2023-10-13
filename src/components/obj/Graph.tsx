@@ -12,11 +12,12 @@ import "reactflow/dist/style.css";
 
 import { CustomNode } from "./CustomNode";
 import PngButton from "./PngButton";
+import { objRelations, objTables } from "./dataMachining";
 
 const initBgColor = "#1A192B";
 
 const connectionLineStyle = { stroke: "#333" };
-const snapGrid = [20, 20];
+
 const nodeTypes = {
   selectorNode: CustomNode,
 };
@@ -28,62 +29,9 @@ const CustomNodeFlow = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
   useEffect(() => {
-    const onChange = (event: { target: { value: any } }) => {
-      setNodes((nds) =>
-        nds.map((node) => {
-          if (node.id !== "2") {
-            return node;
-          }
-
-          const color = event.target.value;
-
-          return {
-            ...node,
-            data: {
-              ...node.data,
-              color,
-            },
-          };
-        })
-      );
-    };
-
-    setNodes([
-      {
-        id: "1",
-        type: "selectorNode", // this is the node type from the type field in the node definition
-        data: {
-          label: "User",
-          columns: [
-            { name: "id", type: "int" },
-            { name: "to", type: "string" },
-          ],
-        },
-        position: { x: 250, y: 40 },
-      },
-      {
-        id: "2",
-        type: "selectorNode",
-        data: {
-          label: "Like",
-          columns: [
-            { name: "id", type: "int" },
-            { name: "to", type: "string" },
-          ],
-        },
-
-        position: { x: 400, y: 40 },
-      },
-    ]);
-
-    setEdges([
-      {
-        id: "1->2",
-        source: "1",
-        target: "2",
-      },
-    ]);
-  }, []);
+    setNodes(objTables);
+    setEdges(objRelations);
+  }, [setNodes, setEdges]);
 
   const onConnect = useCallback(
     (params: Connection | Edge) =>

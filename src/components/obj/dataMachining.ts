@@ -5,8 +5,6 @@ import { data } from "./data";
 
 //table名
 const tables = data.tables;
-//カラム名
-const columns = tables.map((table) => table.columns);
 //カラム内の情報
 const columName = tables.map((table) =>
   table.columns.map((column) => column.name)
@@ -20,7 +18,7 @@ const columOptions = tables.map((table) =>
 
 export const objTables = tables.map((table, table_index) => {
   const objTable = {
-    id: table_index,
+    id: table_index.toString(),
     type: "selectorNode",
     data: {
       label: table.name,
@@ -45,12 +43,9 @@ const to_col = relations.map((relation) => relation.to_col);
 
 export const objRelations = relations.map((relation, index) => {
   const objRelation = {
-    id: index + tables.length,
+    id: index + tables.length.toString(),
     source: from_col[index],
     target: to_col[index],
-    type: "smoothstep",
-    animated: true,
-    style: { stroke: "red" },
   };
   return objRelation;
 });
