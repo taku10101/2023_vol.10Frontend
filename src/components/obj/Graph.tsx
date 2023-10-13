@@ -14,15 +14,13 @@ import { CustomNode } from "./CustomNode";
 import PngButton from "./PngButton";
 import { objRelations, objTables } from "./dataMachining";
 
-const initBgColor = "#1A192B";
-
 const connectionLineStyle = { stroke: "#999" }; //
 
 const nodeTypes = {
   selectorNode: CustomNode,
 };
 
-const defaultViewport = { x: 15, y: 0, zoom: 1 };
+const defaultViewport = { x: 65, y: 0, zoom: 1 };
 
 const CustomNodeFlow = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);

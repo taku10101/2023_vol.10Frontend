@@ -77,6 +77,7 @@ export function CustomNode({ data, isConnectable }: any) {
               sx={{
                 fontSize: "10px",
                 textAlign: "right",
+                fontcolor: "grey",
                 justifyContent: "space-between",
               }}
             >

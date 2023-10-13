@@ -7,6 +7,8 @@ import { data } from "./data";
 const tables = data.tables;
 
 export const objTables = tables.map((table, index) => {
+  const row = Math.floor(index / 2); // 行番号を計算
+  const col = index % 2; // 列番号を計算
   const objTable = {
     id: table.name.toString(),
     type: "selectorNode",
@@ -21,8 +23,8 @@ export const objTables = tables.map((table, index) => {
       }),
     },
     position: {
-      x: parseFloat(`${index * 250}`),
-      y: parseFloat(`${180}`),
+      x: parseFloat(`${200 * col}`),
+      y: parseFloat(`${20 + table.columns.length * 60 * row}`),
     },
   };
 
