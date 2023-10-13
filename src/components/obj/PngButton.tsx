@@ -50,20 +50,20 @@ function PngButton() {
   };
 
   return (
-    <Button
-      className='download-btn'
-      onClick={onClick}
-      sx={{
-        position: "absolute",
-        top: "10px",
-        right: "10px",
-
-        width: "100px",
-      }}
-      variant='outlined'
-    >
-      <Typography sx={{ fontSize: "10px" }}>Export png</Typography>
-    </Button>
+    <>
+      <Panel position={"top-right"}>
+        <Button
+          className='download-btn'
+          onClick={onClick}
+          sx={{
+            width: "100px",
+          }}
+          variant='outlined'
+        >
+          <Typography sx={{ fontSize: "10px" }}>Export png</Typography>
+        </Button>
+      </Panel>
+    </>
   );
 }
 
