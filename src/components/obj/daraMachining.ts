@@ -15,26 +15,27 @@ const ColumType = tables.map((table) =>
   table.columns.map((column) => column.type)
 );
 const columOptions = tables.map((table) =>
-  table.columns.map((column) => column.options)
+  table.columns?.map((column) => column.options)
 );
 
-export const objTables = tables.map((table, index) => {
+export const objTables = tables.map((table, table_index) => {
   const objTable = {
-    id: index,
+    id: table_index,
     type: "selectorNode",
     data: {
       label: table.name,
       columns: [
         {
-          name: columName[index],
-          type: ColumType[index],
-          options: columOptions[index],
+          name: columName,
+          type: ColumType,
+          options: columOptions,
         },
-        { name: "to", type: "string" },
       ],
     },
     position: { x: 0, y: 0 },
   };
+  console.log(columOptions);
+
   return objTable;
 });
 
