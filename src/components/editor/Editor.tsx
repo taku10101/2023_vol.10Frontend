@@ -1,27 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import ReactAce from "react-ace/lib/ace";
+import "ace-builds/src-noconflict/mode-javascript";
+import "ace-builds/src-noconflict/theme-monokai";
 
 const Editor: React.FC = () => {
-  const [text, setText] = useState<string>("");
-  const [socket, setSocket] = useState<WebSocket | null>(null);
+  const [text, setText] = useState<string>(""); // エディタのテキストを保存する
+  const [socket, setSocket] = useState<WebSocket | null>(null); // WebSocketのインスタンスを保存する
+  const [cursorData, setCursorData] = useState<{ [key: string]: any }>({}); // 他のユーザーのカーソルの位置を保存する
+  const lastSentText = useRef<string>(text); // 前回送信したテキストを保存しておく
+
   useEffect(() => {
     const ws = new WebSocket("ws://your-websocket-server-url");
-
+    // WebSocketの接続が確立したらログを出力する
     ws.onopen = () => {
       console.log("WebSocket connected");
     };
 
-    // WebSocketのコネクションが閉じたら、コネクションを破棄
     ws.onmessage = (event) => {
-      console.log("WebSocket message received:", event);
-      console.log("WebSocket message received:", event.data);
-      // 他のクライアントからの変更内容を受け取り、表示内容を更新
-      setText(event.data);
-    };
+      const data = JSON.parse(event.data);
 
-    ws.onclose = () => {
-      console.log("WebSocket disconnected");
-      setSocket(null);
+      switch (data.type) {
+        case "textChange":
+          setText(data.newText);
+          break;
+        case "cursorChange":
+          setCursorData((prev) => ({
+            ...prev,
+            [data.userId]: data.position,
+          }));
+          break;
+        default:
+          break;
+      }
     };
 
     setSocket(ws);
@@ -31,36 +41,49 @@ const Editor: React.FC = () => {
     };
   }, []);
 
-  useEffect(() => {}, [text]);
+  useEffect(() => {
+    // 200msごとにテキストの変更を送信する
+    const interval = setInterval(() => {
+      // 前回送信したテキストと同じ場合は送信しない
+      if (text !== lastSentText.current) {
+        socket?.send(
+          JSON.stringify({
+            message_types: "messagetype",
+            message: text,
+          })
+        );
+        // 送信したテキストを保存しておく
+        lastSentText.current = text;
+      }
+    }, 200);
 
-  const handleChangeText = (value: string, e?: any) => {
-    setText(value);
+    // コンポーネントがアンマウントされたらクリアする
+    return () => clearInterval(interval);
+  }, [text, socket]);
+
+  const handleCursorChange = (editor: any) => {
+    const cursorPosition = editor.getCursorPosition();
+    socket?.send(
+      JSON.stringify({
+        type: "cursorChange",
+        userId: "your-unique-user-id", // 一意のユーザーIDをここにセット
+        position: cursorPosition,
+      })
+    );
   };
 
-  console.log(text);
-
   return (
-    <ReactAce
-      style={{
-        borderRight: "1px solid #ccc",
-      }}
-      placeholder='Heare is your code....'
-      name='DBEditor'
-      fontSize={14}
-      height='calc(100vh - 40px)'
-      showPrintMargin={true}
-      showGutter={true}
-      highlightActiveLine={true}
-      value={text}
-      setOptions={{
-        enableBasicAutocompletion: true,
-        enableLiveAutocompletion: true,
-        enableSnippets: false,
-        showLineNumbers: true,
-        tabSize: 2,
-      }}
-      onChange={handleChangeText}
-    />
+    <div>
+      <ReactAce
+        theme='monokai'
+        onChange={setText}
+        onCursorChange={(editor) => handleCursorChange(editor)}
+        value={text}
+        name='UNIQUE_ID_OF_DIV'
+        editorProps={{ $blockScrolling: true }}
+      />
+      {/* ここに他のユーザーのカーソルを表示するコードを追加 */}
+    </div>
   );
 };
 
