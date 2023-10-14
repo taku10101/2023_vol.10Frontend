@@ -8,6 +8,5 @@ export const usePathHooks = (pathid: any) => {
     setPid(pathid);
   }, [pathid]);
 
-  console.log("pid" + pid);
   return { pid };
 };
