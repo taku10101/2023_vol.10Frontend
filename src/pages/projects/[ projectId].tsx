@@ -11,23 +11,24 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Box
-        sx={{
-          height: "calc(100vh - 40px)",
-        }}
-      >
-        <RequireAuth>
-          <Grid container display={"flex"}>
-            <Grid xs={4}>
-              <Editor />
-            </Grid>
 
-            <Grid xs={8}>
-              <Graph />
-            </Grid>
+      <RequireAuth>
+        <Grid
+          container
+          display={"flex"}
+          sx={{
+            height: "calc(100vh - 40px)",
+          }}
+        >
+          <Grid xs={4}>
+            <Editor />
           </Grid>
-        </RequireAuth>
-      </Box>
+
+          <Grid xs={8}>
+            <Graph />
+          </Grid>
+        </Grid>
+      </RequireAuth>
     </>
   );
 }
