@@ -3,7 +3,7 @@ import { Box, Grid } from "@mui/material";
 import RequireAuth from "@/components/auth/RequireAuth";
 
 import Header from "@/components/common/Header";
-import Editor from "../components/editor/Editor";
+import Editor from "../../components/editor/Editor";
 
 import Graph from "@/components/obj/Graph";
 
@@ -11,7 +11,6 @@ export default function Home() {
   return (
     <>
       <Header />
-
       <Box
         sx={{
           height: "calc(100vh - 40px)",
