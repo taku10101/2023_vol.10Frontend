@@ -3,6 +3,7 @@ import { auth } from "../../lib/firebase/client";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import GoogleButton from "react-google-button";
 import { postUser } from "../api/user";
+import { Box, Button } from "@mui/material";
 
 const LoginButton: React.FC = () => {
   const handleGoogleLogin = async () => {
@@ -18,8 +19,6 @@ const LoginButton: React.FC = () => {
       console.error("Google login failed:", error);
     }
   };
-  return (
-    <GoogleButton onClick={handleGoogleLogin}>Login with Google</GoogleButton>
-  );
+  return <Button onClick={handleGoogleLogin}>Login with Google</Button>;
 };
 export default LoginButton;
