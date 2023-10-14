@@ -13,8 +13,8 @@ const Editor: React.FC<Props> = (props: Props) => {
   const [socket, setSocket] = useState<WebSocket | null>(null); // WebSocketのインスタンスを保存する
   const [cursorData, setCursorData] = useState<{ [key: string]: any }>({}); // 他のユーザーのカーソルの位置を保存する
   const lastSentText = useRef<string>(text); // 前回送信したテキストを保存しておく
-
   const { project_id, user_id } = props;
+
   useEffect(() => {
     const ws = new WebSocket(
       `ws://localhost:8080/projects/${project_id}/${user_id}`
