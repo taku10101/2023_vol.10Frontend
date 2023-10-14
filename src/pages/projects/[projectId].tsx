@@ -3,7 +3,7 @@ import { Box, Grid } from "@mui/material";
 import RequireAuth from "@/components/auth/RequireAuth";
 import Header from "@/components/common/Header";
 import Editor from "../../components/editor/Editor";
-import CustomNodeFlow from "@/components/obj/Graph";
+import CustomNodeFlow from "@/components/obj/CustomNodeFlow";
 
 import "firebase/auth";
 import { auth } from "../../lib/firebase/client";
@@ -21,6 +21,7 @@ export default function Home() {
 
       <RequireAuth>
         <Grid
+          xs={12}
           container
           display={"flex"}
           sx={{
@@ -31,7 +32,12 @@ export default function Home() {
             <Editor pathid={pathid} />
           </Grid>
 
-          <Grid xs={8}>
+          <Grid
+            xs={8}
+            sx={{
+              paddingLeft: "25px",
+            }}
+          >
             <CustomNodeFlow />
           </Grid>
         </Grid>

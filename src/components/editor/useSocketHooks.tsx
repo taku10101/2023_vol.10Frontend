@@ -66,11 +66,10 @@ export const useSocketHooks = (pathid: string) => {
   ws.addEventListener("message", (event) => {
     const edata = JSON.parse(event.data);
 
-    setObjdata(edata.message);
-
     switch (edata.message_type) {
       case "object":
         setObjdata(edata.message);
+
         break;
       case "move_object":
         console.log("move_object");
