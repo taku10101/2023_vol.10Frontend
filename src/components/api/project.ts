@@ -4,6 +4,7 @@ import { auth } from "../../lib/firebase/client";
 export const createProject = async () => {
   const firebaseUser = auth.currentUser;
   if (!firebaseUser) return null;
+  const token = await auth.currentUser?.getIdToken(true);
   const response = await fetch(
     `http://localhost:8080/users/${firebaseUser.uid}/projects`,
     {

@@ -4,6 +4,8 @@ import "firebase/auth";
 import { auth } from "../../lib/firebase/client";
 
 export const getUser = async () => {
+  const token = await auth.currentUser?.getIdToken(true);
+
   const firebaseUser = auth.currentUser;
   if (!firebaseUser) return null;
   try {
@@ -26,6 +28,7 @@ export const getUser = async () => {
 };
 
 export const postUser = async () => {
+  const token = await auth.currentUser?.getIdToken(true);
   const firebaseUser = auth.currentUser;
   if (!firebaseUser) throw new Error("No current user");
 
@@ -39,6 +42,7 @@ export const postUser = async () => {
       const response = await fetch("http://127.0.0.1:8080/users", {
         method: "POST",
         headers: {
+          dbauthorization: token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -54,6 +58,6 @@ export const postUser = async () => {
     }
   } catch (err) {
     console.log(err);
-    throw err; // エラーをスローして、呼び出し元でキャッチできるようにします
+    throw err;
   }
 };
