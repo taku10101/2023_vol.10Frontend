@@ -1,87 +1,19 @@
-import React, { useEffect, useState, useRef } from "react";
+import React from "react";
 import ReactAce from "react-ace/lib/ace";
-import "ace-builds/src-noconflict/mode-javascript";
-import "ace-builds/src-noconflict/theme-monokai";
+import { text } from "stream/consumers";
+import { Sokethoooks } from "./Socket";
 
-type Props = {
-  project_id?: string; // project_idをオプションにする
-  user_id?: string; // user_idをオプションにする
-};
-
-const Editor: React.FC<Props> = (props: Props) => {
-  const [text, setText] = useState<string>(""); // エディタのテキストを保存する
-  const [socket, setSocket] = useState<WebSocket | null>(null); // WebSocketのインスタンスを保存する
-  const [cursorData, setCursorData] = useState<{ [key: string]: any }>({}); // 他のユーザーのカーソルの位置を保存する
-  const lastSentText = useRef<string>(text); // 前回送信したテキストを保存しておく
-  const { project_id, user_id } = props;
-
-  useEffect(() => {
-    const ws = new WebSocket(
-      `ws://localhost:8080/projects/${project_id}/${user_id}`
-    );
-    console.log(`ws://localhost:8080/projects/${project_id}/${user_id}`);
-    // WebSocketの接続が確立したらログを出力する
-    ws.onopen = () => {
-      console.log("WebSocket connected");
-    };
-
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-
-      switch (data.type) {
-        case "textChange":
-          setText(data.newText);
-          break;
-        case "cursorChange":
-          setCursorData((prev) => ({
-            ...prev,
-            [data.userId]: data.position,
-          }));
-          break;
-        default:
-          break;
-      }
-    };
-
-    setSocket(ws);
-
-    return () => {
-      ws.close();
-    };
-  }, []);
-
-  useEffect(() => {
-    // 200msごとにテキストの変更を送信する
-    const interval = setInterval(() => {
-      // 前回送信したテキストと同じ場合は送信しない
-      if (text !== lastSentText.current) {
-        socket?.send(
-          JSON.stringify({
-            message_types: "Editor",
-            message: text,
-          })
-        );
-        // 送信したテキストを保存しておく
-        lastSentText.current = text;
-      }
-    }, 200);
-
-    // コンポーネントがアンマウントされたらクリアする
-    return () => clearInterval(interval);
-  }, [text, socket]);
-
+const Editor = () => {
+  const { text, setText } = Sokethoooks();
   return (
-    <div>
-      <ReactAce
-        theme='monokai'
-        onChange={setText}
-        value={text}
-        name='UNIQUE_ID_OF_DIV'
-        editorProps={{ $blockScrolling: true }}
-        height=' calc(100vh - 40px)'
-      />
-      {/* ここに他のユーザーのカーソルを表示するコードを追加 */}
-    </div>
+    <ReactAce
+      theme='monokai'
+      onChange={setText}
+      value={text}
+      name='UNIQUE_ID_OF_DIV'
+      editorProps={{ $blockScrolling: true }}
+      height=' calc(100vh - 40px)'
+    />
   );
 };
 
