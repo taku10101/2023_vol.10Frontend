@@ -1,9 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 import "firebase/auth";
-import { getAuth } from "firebase/auth";
-
-const auth = getAuth();
+import { auth } from "../../lib/firebase/client";
 
 export const getUser = async () => {
   const firebaseUser = auth.currentUser;
