@@ -1,10 +1,17 @@
 import React from "react";
 import ReactAce from "react-ace/lib/ace";
 import { text } from "stream/consumers";
-import { Sokethoooks } from "./Socket";
+import { useSocketHooks } from "./useSocketHooks";
+import path from "path";
+import { type } from "os";
 
-const Editor = () => {
-  const { text, setText } = Sokethoooks();
+type Props = {
+  pathid: any;
+};
+
+const Editor = (props: Props) => {
+  const { pathid } = props;
+  const { text, setText } = useSocketHooks(pathid);
   return (
     <ReactAce
       theme='monokai'

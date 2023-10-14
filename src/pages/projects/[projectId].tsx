@@ -9,13 +9,13 @@ import { useEffect } from "react";
 import "firebase/auth";
 import { auth } from "../../lib/firebase/client";
 import { useParams } from "next/navigation";
-import { UsePathHooks } from "../../components/common/UsePathHooks";
+import { usePathHooks } from "../../components/common/usePathHooks";
 export default function Home() {
   const params = useParams();
-  const pathid = params?.projectId.toString();
+  const pathid = params?.projectId;
 
-  UsePathHooks(pathid);
-
+  usePathHooks(pathid);
+  console.log("page" + pathid);
   return (
     <>
       <Header />
@@ -29,12 +29,10 @@ export default function Home() {
           }}
         >
           <Grid xs={4}>
-            <Editor />
+            <Editor pathid={pathid} />
           </Grid>
 
-          <Grid xs={8}>
-            <Graph />
-          </Grid>
+          <Grid xs={8}>{/* <Graph /> */}</Grid>
         </Grid>
       </RequireAuth>
     </>

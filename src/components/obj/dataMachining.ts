@@ -1,12 +1,9 @@
-import { table } from "console";
+import { useSocketHooks } from "../editor/useSocketHooks";
+import { demodata } from "./data";
 
-import { Sokethoooks } from "../editor/Socket";
-
-const { text, setText, objdata, setObjdata } = Sokethoooks();
 //table名
 
-const tables = objdata.tables;
-
+const tables = demodata.tables;
 export const objTables = tables.map(
   (table: { name: { toString: () => any }; columns: any[] }, index: number) => {
     const row = Math.floor(index / 2); // 行番号を計算
@@ -37,7 +34,7 @@ export const objTables = tables.map(
 );
 console.log(objTables);
 
-const relations = objdata.relations;
+const relations = demodata.relations;
 
 export const objRelations = relations.map(
   (
