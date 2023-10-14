@@ -1,3 +1,4 @@
+import { CProjectButton } from "@/components/ project/createProjectButton";
 import Header from "@/components/common/Header";
 import { PersonalCard } from "@/components/overView/PersonalCard";
 import { TeamCard } from "@/components/overView/TeamCard";
@@ -14,6 +15,7 @@ function OverviewPage() {
         <TeamCard />
         <Box sx={{ py: "20px" }} />
         <PersonalCard />
+        <CProjectButton />
       </Box>
     </>
   );
