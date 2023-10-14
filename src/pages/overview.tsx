@@ -12,10 +12,20 @@ function OverviewPage() {
       <Header />
 
       <Box sx={{ mt: 4 }}>
-        <TeamCard />
-        <Box sx={{ py: "20px" }} />
+        <Box
+          sx={{
+            position: "absolute",
+            right: "20px",
+            top: "80px",
+          }}
+        >
+          <CProjectButton />
+        </Box>
+
         <PersonalCard />
-        <CProjectButton />
+
+        <Box sx={{ py: "20px" }} />
+        <TeamCard />
       </Box>
     </>
   );
