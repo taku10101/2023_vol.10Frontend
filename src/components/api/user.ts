@@ -5,48 +5,57 @@ import { getAuth } from "firebase/auth";
 
 const auth = getAuth();
 
-type Data = {
-  name: string;
-  uid: string;
-  email: string;
-};
-
-const getUser = async () => {
+export const getUser = async () => {
   const firebaseUser = auth.currentUser;
   if (!firebaseUser) return null;
-  const response = await fetch(
-    `http://localhost:8080/users/${firebaseUser.uid}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  const getUser = await response.json();
-  console.log(getUser);
-  return getUser;
+  try {
+    const response = await fetch(
+      `http://localhost:8080/users/${firebaseUser.uid}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const user = await response.json();
+    console.log(user);
+    return user;
+  } catch (err) {
+    console.log(err);
+    throw err; // エラーをスローして、呼び出し元でキャッチできるようにします
+  }
 };
 
-export async function postUser() {
-  const user = auth.currentUser;
-  if (!getUser) {
-    const response = await fetch("http://127.0.0.1:8080/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user_id: user?.uid,
-        name: user?.displayName,
-        // email: user?.email,
-        // photoURL: user?.photoURL,
-      }),
-    });
-    const data = await response.json();
-    console.log(data);
-    return data;
-  } else {
-    console.log("user already exists");
+export const postUser = async () => {
+  const firebaseUser = auth.currentUser;
+  if (!firebaseUser) throw new Error("No current user");
+
+  try {
+    const existingUser = await getUser(); // getUser関数を呼び出して結果を取得します
+
+    if (existingUser) {
+      console.log("user already exists");
+      return existingUser;
+    } else {
+      const response = await fetch("http://127.0.0.1:8080/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: firebaseUser.uid,
+          name: firebaseUser.displayName,
+          // email: firebaseUser.email,
+          // photoURL: firebaseUser.photoURL,
+        }),
+      });
+      const newUser = await response.json();
+      console.log(newUser);
+      return newUser;
+    }
+  } catch (err) {
+    console.log(err);
+    throw err; // エラーをスローして、呼び出し元でキャッチできるようにします
   }
-}
+};
