@@ -4,22 +4,22 @@ import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-monokai";
 
 type Props = {
-  project_id: string;
-  user_id: string;
+  project_id?: string; // project_idをオプションにする
+  user_id?: string; // user_idをオプションにする
 };
 
-const Editor: React.FC = (props: Pros) => {
+const Editor: React.FC<Props> = (props: Props) => {
   const [text, setText] = useState<string>(""); // エディタのテキストを保存する
   const [socket, setSocket] = useState<WebSocket | null>(null); // WebSocketのインスタンスを保存する
   const [cursorData, setCursorData] = useState<{ [key: string]: any }>({}); // 他のユーザーのカーソルの位置を保存する
   const lastSentText = useRef<string>(text); // 前回送信したテキストを保存しておく
 
   const { project_id, user_id } = props;
-
   useEffect(() => {
     const ws = new WebSocket(
       `ws://localhost:8080/projects/${project_id}/${user_id}`
     );
+    console.log(`ws://localhost:8080/projects/${project_id}/${user_id}`);
     // WebSocketの接続が確立したらログを出力する
     ws.onopen = () => {
       console.log("WebSocket connected");
@@ -78,7 +78,7 @@ const Editor: React.FC = (props: Pros) => {
         value={text}
         name='UNIQUE_ID_OF_DIV'
         editorProps={{ $blockScrolling: true }}
-        height='100vh'
+        height=' calc(100vh - 40px)'
       />
       {/* ここに他のユーザーのカーソルを表示するコードを追加 */}
     </div>
