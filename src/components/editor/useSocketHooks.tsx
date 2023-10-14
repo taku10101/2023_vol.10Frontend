@@ -1,18 +1,14 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import ReactAce from "react-ace/lib/ace";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-monokai";
-import { usePathHooks } from "../common/usePathHooks";
+import { usePathHooks } from "../common/UsePathHooks";
 import { auth } from "@/lib/firebase/client";
 import { Buffer } from "buffer";
-
-import { demodata } from "../obj/data";
 
 export const useSocketHooks = (pathid: string) => {
   const { pid } = usePathHooks(pathid);
   const project_id = pid;
-
-  console.log("socket" + pid);
 
   const [text, setText] = useState<string>(""); // エディタのテキストを保存する
   const lastSentText = useRef<string>(text); // 前回送信したテキストを保存しておく
@@ -31,8 +27,9 @@ export const useSocketHooks = (pathid: string) => {
   };
   let str_token = JSON.stringify(token).toString();
   let base64 = Buffer.from(str_token).toString("base64");
+
+  const ws = new WebSocket(`ws://localhost:8080/rooms/${base64}`);
   useEffect(() => {
-    const ws = new WebSocket(`ws://localhost:8080/rooms/${base64}`);
     // WebSocketの接続が確立したらログを出力する
     ws.onopen = () => {
       console.log("WebSocket connected");
@@ -53,88 +50,39 @@ export const useSocketHooks = (pathid: string) => {
       if (text !== lastSentText.current) {
         socket?.send(
           JSON.stringify({
-            message_types: "Editor",
+            message_type: "editor",
             message: text,
           })
         );
+
         // 送信したテキストを保存しておく
         lastSentText.current = text;
       }
-    }, 200);
+    }, 5000);
+  }, [text]);
 
-    // コンポーネントがアンマウントされたらクリアする
-    return () => clearInterval(interval);
-  }, [text, socket]);
+  // Objectのデータを受信する
 
-  useEffect(() => {
-    // Objectのデータを受信する
-    socket?.addEventListener("message", (event) => {
-      const data = JSON.parse(event.data);
-      console.log(data);
-      if (data.message_types === "move_object") {
-        setObjdata(data);
-      }
-    });
-  }, [socket]);
+  ws.addEventListener("message", (event) => {
+    const edata = JSON.parse(event.data);
+
+    setObjdata(edata.message);
+
+    switch (edata.message_type) {
+      case "object":
+        setObjdata(edata.message);
+        break;
+      case "move_object":
+        console.log("move_object");
+        break;
+      case "move_pointer":
+        console.log("move_pointer");
+        break;
+      default:
+        //errorハンドリング
+        break;
+    }
+  });
+
   return { text, setText, objdata, setObjdata };
-};
-
-export const objTables = (demodata: any) => {
-  const tables = demodata.tables;
-  tables.map(
-    (
-      table: { name: { toString: () => any }; columns: any[] },
-      index: number
-    ) => {
-      const row = Math.floor(index / 2); // 行番号を計算
-      const col = index % 2; // 列番号を計算
-      const objTable = {
-        id: table.name.toString(),
-        type: "selectorNode",
-        data: {
-          label: table.name,
-          columns: table.columns.map(
-            (column: { name: any; type: any; options: any }) => {
-              return {
-                name: column.name,
-                type: column.type,
-                options: column.options,
-              };
-            }
-          ),
-        },
-        position: {
-          x: parseFloat(`${200 * col}`),
-          y: parseFloat(`${20 + table.columns.length * 60 * row}`),
-        },
-      };
-
-      return objTable;
-    }
-  );
-};
-
-//relation
-export const objRelations = (demodata: any) => {
-  const relations = demodata.relations;
-  relations.map(
-    (
-      relation: {
-        to_col: { toString: () => string };
-        from_col: { toString: () => string };
-      },
-      index: any
-    ) => {
-      const target = relation.to_col.toString().replace(/^(.*?)\..*$/, "$1");
-      const source = relation.from_col.toString().replace(/^(.*?)\..*$/, "$1");
-
-      const objRelation = {
-        id: `${source + "=>" + target}`,
-        source: source,
-        target: target,
-        type: "smoothstep",
-      };
-      return objRelation;
-    }
-  );
 };

@@ -3,13 +3,12 @@ import { Box, Grid } from "@mui/material";
 import RequireAuth from "@/components/auth/RequireAuth";
 import Header from "@/components/common/Header";
 import Editor from "../../components/editor/Editor";
-import Graph from "@/components/obj/Graph";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import CustomNodeFlow from "@/components/obj/Graph";
+
 import "firebase/auth";
 import { auth } from "../../lib/firebase/client";
 import { useParams } from "next/navigation";
-import { usePathHooks } from "../../components/common/usePathHooks";
+import { usePathHooks } from "../../components/common/UsePathHooks";
 export default function Home() {
   const params = useParams();
   const pathid = params?.projectId;
@@ -32,7 +31,9 @@ export default function Home() {
             <Editor pathid={pathid} />
           </Grid>
 
-          <Grid xs={8}>{/* <Graph /> */}</Grid>
+          <Grid xs={8}>
+            <CustomNodeFlow />
+          </Grid>
         </Grid>
       </RequireAuth>
     </>
