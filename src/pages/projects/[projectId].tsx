@@ -3,7 +3,7 @@ import { Box, Grid } from "@mui/material";
 import RequireAuth from "@/components/auth/RequireAuth";
 import Header from "@/components/common/Header";
 import Editor from "../../components/editor/Editor";
-import CustomNodeFlow from "@/components/obj/CustomNodeFlow";
+import CustomNodeFlow from "../../components/obj/CustomNodeFlow";
 
 import "firebase/auth";
 import { auth } from "../../lib/firebase/client";
