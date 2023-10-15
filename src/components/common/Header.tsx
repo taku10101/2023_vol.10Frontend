@@ -41,7 +41,8 @@ const Header = () => {
       <Box display='flex' alignItems='center' gap={2}>
         <img src='/path/to/your/logo.png' alt='Logo' width={50} />
         <span style={{ color: "white", fontWeight: "bold" }}>
-          {currentPage}
+          SchemaCreator
+          {/* {currentPage} */}
         </span>
       </Box>
 

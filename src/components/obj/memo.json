@@ -1,0 +1,42 @@
+{
+  "message_type": "object",
+  "message": {
+    "raw_data": "// userのテーブル\nTable users {\n    id          INT()         [pk]\n    name        VARCHAR     [nn]\n    email       varchar     [nn, unique]\n    password    varchar     [nn]\n    created_at  timestamptz [df: `now()`]\n}\n// postのテーブル                   \n        Table posts {\n    id          int         [pk]\n    title       varchar     [nn]\n    content     hoge        [nn]\n    user_id     int         [nn]\n    created_at  timestamptz [nn,df:now()]\n}\n// likeのテーブル                   \nTable likes {\n    id           int         [pk]\n    to_user_id   int         [nn]\n    from_user_id int         [nn]\n}\nEnum hoge {\n  fuga\n  foo\n  bar\n}\n// userとpostとliの関係\nusers.id -\u003e posts.user_id\nusers.id -\u003e likes.to_user_id\nusers.id -\u003e likes.from_user_id",
+    "tables": [
+      {
+        "name": "users",
+        "columns": [
+          { "name": "id", "type": "INT()", "options": ["PK"] },
+          { "name": "name", "type": "VARCHAR", "options": ["NN"] },
+          { "name": "email", "type": "varchar", "options": ["NN"] },
+          { "name": "password", "type": "varchar", "options": ["NN"] },
+          { "name": "created_at", "type": "timestamptz", "options": null }
+        ]
+      },
+      {
+        "name": "posts",
+        "columns": [
+          { "name": "id", "type": "int", "options": ["PK"] },
+          { "name": "title", "type": "varchar", "options": ["NN"] },
+          { "name": "content", "type": "hoge", "options": ["NN"] },
+          { "name": "user_id", "type": "int", "options": ["NN"] },
+          { "name": "created_at", "type": "timestamptz", "options": ["NN"] }
+        ]
+      },
+      {
+        "name": "likes",
+        "columns": [
+          { "name": "id", "type": "int", "options": ["PK"] },
+          { "name": "to_user_id", "type": "int", "options": ["NN"] },
+          { "name": "from_user_id", "type": "int", "options": ["NN"] }
+        ]
+      }
+    ],
+    "relations": [
+      { "from_col": "users.id", "to_col": "posts.user_id" },
+      { "from_col": "users.id", "to_col": "likes.to_user_id" },
+      { "from_col": "users.id", "to_col": "likes.from_user_id" }
+    ],
+    "enums": [{ "name": "hoge", "fields": ["fuga", "foo", "bar"] }]
+  }
+}

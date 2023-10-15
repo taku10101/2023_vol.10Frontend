@@ -9,9 +9,7 @@ import { Buffer } from "buffer";
 export const useSocketHooks = (pathid: string) => {
   const { pid } = usePathHooks(pathid);
   const project_id = pid;
-
   const [text, setText] = useState<string>(""); // エディタのテキストを保存する
-  const lastSentText = useRef<string>(text); // 前回送信したテキストを保存しておく
   const [socket, setSocket] = useState<WebSocket | null>(null); // WebSocketのインスタンスを保存する
 
   const [objdata, setObjdata] = useState<any>([]); // オブジェクトのデータを保存する
@@ -43,45 +41,55 @@ export const useSocketHooks = (pathid: string) => {
     setSocket(ws);
   }, []);
 
-  useEffect(() => {
-    // 200msごとにテキストの変更を送信する
-    const interval = setInterval(() => {
-      // 前回送信したテキストと同じ場合は送信しない
-      if (text !== lastSentText.current) {
-        socket?.send(
-          JSON.stringify({
-            message_type: "editor",
-            message: text,
-          })
-        );
+  //接続が切れたら再接続する
 
-        // 送信したテキストを保存しておく
-        lastSentText.current = text;
-      }
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const textData = JSON.stringify({
+        message_type: "editor",
+        message: text,
+      });
+      socket?.send(textData);
     }, 5000);
+
+    return () => {
+      clearInterval(interval);
+    };
   }, [text]);
 
   // Objectのデータを受信する
 
   ws.addEventListener("message", (event) => {
-    const edata = JSON.parse(event.data);
+    try {
+      // メッセージデータをJSONオブジェクトにパースします
+      const eventData = event.data;
+      const eventData_json = JSON.parse(event.data);
+      const postData = eventData_json.message;
 
-    switch (edata.message_type) {
-      case "object":
-        setObjdata(edata.message);
+      switch (eventData_json.message_type) {
+        case "object":
+          // "object"タイプのメッセージを処理
+          setObjdata(postData);
 
-        break;
-      case "move_object":
-        console.log("move_object");
-        break;
-      case "move_pointer":
-        console.log("move_pointer");
-        break;
-      default:
-        //errorハンドリング
-        break;
+          break;
+        case "editor":
+          // "editor"タイプのメッセージを処理
+          console.log("editor");
+          break;
+        default:
+          console.log("Unknown message type:", eventData.message_type);
+      }
+    } catch (e) {
+      // エラーハンドリング: パースに失敗した場合など
+      console.error("Error handling message:", e);
     }
   });
 
+  // objdata.messes.tablesご取得されていない場合ローディング
+
+  if (!objdata) {
+    console.log("loading");
+    return { text, setText };
+  }
   return { text, setText, objdata, setObjdata };
 };

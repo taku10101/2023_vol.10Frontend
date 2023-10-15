@@ -41,6 +41,5 @@ export const createProject = async () => {
 //   );
 //   const data = await response.json();
 
-//   console.log(data);
 //   return Promise.resolve(data);
 // };

@@ -13,12 +13,12 @@ import "reactflow/dist/style.css";
 import { CustomNode } from "./CustomNode";
 import PngButton from "./PngButton";
 
+import { demodata } from "./data";
 import { useSocketHooks } from "../editor/useSocketHooks";
 
 const connectionLineStyle = { stroke: "#999" };
-const nodeTypes = {
-  selectorNode: CustomNode,
-};
+
+const nodeTypes = { selectorNode: CustomNode };
 
 const defaultViewport = { x: 65, y: 0, zoom: 1 };
 
@@ -27,12 +27,14 @@ const CustomNodeFlow = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
   const { objdata, setObjdata } = useSocketHooks("");
+  console.log("objdata" + objdata);
 
   const objTables = (objdata: any) => {
-    console.log(objdata);
+    const tablesData = objdata.tables;
+    // const tablesData = demodata.tables;
 
-    const tables = objdata.tables;
-    const result = tables?.map(
+    console.log(tablesData);
+    const result = tablesData?.map(
       (
         table: { name: { toString: () => any }; columns: any[] },
         index: number
@@ -67,7 +69,9 @@ const CustomNodeFlow = () => {
   };
 
   const objRelations = (objdata: any) => {
-    const relations = objdata.relations;
+    const relations = objdata?.relations;
+    // const relations = demodata.relations;
+
     const result = relations?.map(
       (
         relation: {
@@ -99,6 +103,7 @@ const CustomNodeFlow = () => {
     const objRelationsData = objRelations(objdata);
     setNodes(objTablesData);
     setEdges(objRelationsData);
+    console.log("objTablesData" + objTablesData);
   }, [objdata]);
 
   const onConnect = useCallback(

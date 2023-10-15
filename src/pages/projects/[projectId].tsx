@@ -6,7 +6,6 @@ import Editor from "../../components/editor/Editor";
 import CustomNodeFlow from "../../components/obj/CustomNodeFlow";
 
 import "firebase/auth";
-import { auth } from "../../lib/firebase/client";
 import { useParams } from "next/navigation";
 import { usePathHooks } from "../../components/common/UsePathHooks";
 export default function Home() {
