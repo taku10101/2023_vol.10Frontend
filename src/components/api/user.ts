@@ -61,3 +61,27 @@ export const postUser = async () => {
     throw err;
   }
 };
+
+// export const getfile = async () => {
+
+//   try {
+//     const response = await fetch(
+//       `http://localhost:8080/users/${firebaseUser.uid}/files`,
+
+// query = convert_type
+//       query = convert_type
+//       {
+//         method: "GET",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//       }
+//     );
+//     const user = await response.json();
+//     console.log(user);
+//     return user;
+//   } catch (err) {
+//     console.log(err);
+//     throw err; // エラーをスローして、呼び出し元でキャッチできるようにします
+//   }
+// }

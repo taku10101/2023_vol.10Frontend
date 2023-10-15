@@ -57,6 +57,7 @@ function PngButton() {
           onClick={onClick}
           sx={{
             width: "100px",
+            height: "35px",
           }}
           variant='outlined'
         >

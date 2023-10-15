@@ -16,6 +16,7 @@
     "@mui/material": "^5.14.11",
     "blob": "^0.1.0",
     "firebase": "^10.4.0",
+    "fs": "^0.0.1-security",
     "html-to-image": "^1.11.11",
     "next": "^13.5.3",
     "ramda": "^0.29.1",

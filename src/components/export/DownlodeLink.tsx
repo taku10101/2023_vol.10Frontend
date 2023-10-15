@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import React from "react";
 
 interface Props {
@@ -17,9 +18,9 @@ const DownlodeLink: React.FC<Props> = ({ data, fileName, mimeType }) => {
   };
 
   return (
-    <a href={url} download={fileName} onClick={cleanup}>
+    <Button href={url} download={fileName} onClick={cleanup}>
       Download
-    </a>
+    </Button>
   );
 };
 

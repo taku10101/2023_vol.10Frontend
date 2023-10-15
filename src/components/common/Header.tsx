@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Box, IconButton } from "@mui/material";
+import { Box, Button, IconButton } from "@mui/material";
 import { useRouter } from "next/router";
 import { getUser } from "../api/user";
 import LogoutButton from "../auth/LogoutButton";
 import LoginButton from "../auth/LoginButton";
+import ExportButton from "../export/ExportButton";
 
 const Header = () => {
   const router = useRouter();
@@ -59,6 +60,18 @@ const Header = () => {
             <LoginButton />
           </IconButton>
         )}
+        <Button
+          variant='outlined'
+          sx={{
+            width: "100px",
+            height: "35px",
+            fontSize: "10px",
+
+            zIndex: 100,
+          }}
+        >
+          <ExportButton />
+        </Button>
       </Box>
     </Box>
   );

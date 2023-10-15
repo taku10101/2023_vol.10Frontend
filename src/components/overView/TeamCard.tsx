@@ -24,7 +24,7 @@ export const TeamCard = () => {
               <CardMedia
                 component='img'
                 height='150'
-                image='https://source.unsplash.com/random'
+                src='./00.png'
                 alt={`Card Image ${item}`}
                 style={{
                   borderTopLeftRadius: "8px",

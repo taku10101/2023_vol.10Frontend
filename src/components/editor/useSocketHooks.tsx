@@ -5,6 +5,7 @@ import "ace-builds/src-noconflict/theme-monokai";
 import { usePathHooks } from "../common/UsePathHooks";
 import { auth } from "@/lib/firebase/client";
 import { Buffer } from "buffer";
+import { table } from "console";
 
 export const useSocketHooks = (pathid: string) => {
   const { pid } = usePathHooks(pathid);
@@ -62,14 +63,14 @@ export const useSocketHooks = (pathid: string) => {
   ws.addEventListener("message", (event) => {
     try {
       // メッセージデータをJSONオブジェクトにパースします
-      const eventData = event.data;
+
       const eventData_json = JSON.parse(event.data);
       const postData = eventData_json.message;
 
       switch (eventData_json.message_type) {
         case "object":
-          // "object"タイプのメッセージを処理
           setObjdata(postData);
+          console.log("HooksData " + postData);
 
           break;
         case "editor":
@@ -77,7 +78,7 @@ export const useSocketHooks = (pathid: string) => {
           console.log("editor");
           break;
         default:
-          console.log("Unknown message type:", eventData.message_type);
+          console.log("Unknown message type:", eventData_json.message_type);
       }
     } catch (e) {
       // エラーハンドリング: パースに失敗した場合など

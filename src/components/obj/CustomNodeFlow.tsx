@@ -15,6 +15,7 @@ import PngButton from "./PngButton";
 
 import { demodata } from "./data";
 import { useSocketHooks } from "../editor/useSocketHooks";
+import ExportButton from "../export/ExportButton";
 
 const connectionLineStyle = { stroke: "#999" };
 
@@ -27,13 +28,10 @@ const CustomNodeFlow = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
   const { objdata, setObjdata } = useSocketHooks("");
-  console.log("objdata" + objdata);
-
-  const objTables = (objdata: any) => {
-    const tablesData = objdata.tables;
-    // const tablesData = demodata.tables;
-
-    console.log(tablesData);
+  const objTables = (data: any) => {
+    // const tablesData = data.tables;
+    const tablesData = demodata.tables;
+    console.log(data);
     const result = tablesData?.map(
       (
         table: { name: { toString: () => any }; columns: any[] },
@@ -65,12 +63,13 @@ const CustomNodeFlow = () => {
         return objTable;
       }
     );
+    console.log(result);
     return result;
   };
 
-  const objRelations = (objdata: any) => {
-    const relations = objdata?.relations;
-    // const relations = demodata.relations;
+  const objRelations = (data: any) => {
+    // const relations = data?.relations;
+    const relations = demodata.relations;
 
     const result = relations?.map(
       (
@@ -98,12 +97,10 @@ const CustomNodeFlow = () => {
   };
 
   useEffect(() => {
-    if (!objdata) return;
     const objTablesData = objTables(objdata);
     const objRelationsData = objRelations(objdata);
     setNodes(objTablesData);
     setEdges(objRelationsData);
-    console.log("objTablesData" + objTablesData);
   }, [objdata]);
 
   const onConnect = useCallback(
